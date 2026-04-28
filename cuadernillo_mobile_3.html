@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>¿Qué hacer para no perder clientes? — Guía</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --negro: #1a1a1a;
+    --verde: #CCFF33;
+    --violeta: #7B5EA7;
+    --gris: #f5f5f0;
+    --blanco: #ffffff;
+    --gris-texto: #555;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  body { font-family:'DM Sans',sans-serif; background:var(--gris); color:var(--negro); font-size:15px; line-height:1.6; }
+
+  /* HERO */
+  .hero { background:var(--negro); position:relative; overflow:hidden; min-height:100svh; display:flex; flex-direction:column; justify-content:space-between; }
+  .hero-top { padding:28px 24px 0; display:flex; justify-content:space-between; align-items:center; position:relative; z-index:2; }
+  .tag-comunidad { font-size:10px; font-weight:700; color:var(--verde); letter-spacing:2.5px; text-transform:uppercase; border:1px solid var(--verde); padding:5px 10px; }
+  .tag-fecha { font-size:10px; color:rgba(255,255,255,0.35); letter-spacing:2px; text-transform:uppercase; }
+  .hero-deco { position:absolute; top:0; right:0; width:120px; height:120px; background:var(--violeta); border-radius:0 0 0 100%; opacity:0.5; z-index:1; }
+  .hero-deco2 { position:absolute; bottom:80px; right:24px; width:44px; height:44px; background:var(--verde); border-radius:50%; opacity:0.25; z-index:1; }
+  .hero-centro { padding:40px 24px 32px; position:relative; z-index:2; flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .hero h1 { font-family:'Bebas Neue',sans-serif; font-size:64px; line-height:0.92; color:var(--blanco); }
+  .hero h1 span { color:var(--verde); }
+  .hero-sub { margin-top:20px; font-size:13px; color:rgba(255,255,255,0.45); line-height:1.7; max-width:280px; }
+  .hero-scroll { padding:16px 24px; background:var(--verde); display:flex; align-items:center; justify-content:space-between; position:relative; z-index:2; }
+  .hero-scroll span { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:2px; color:var(--negro); }
+  .scroll-arrow { font-size:18px; animation:bounce 1.4s infinite; }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(4px)} }
+
+  /* NAV */
+  .sticky-nav { position:sticky; top:0; z-index:100; background:var(--negro); padding:10px 20px; display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; border-bottom:2px solid var(--verde); }
+  .sticky-nav::-webkit-scrollbar { display:none; }
+  .nav-item { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:rgba(255,255,255,0.45); white-space:nowrap; padding:4px 10px; cursor:pointer; border:1px solid transparent; transition:all 0.2s; text-decoration:none; }
+  .nav-item:hover, .nav-item.active { color:var(--negro); background:var(--verde); }
+
+  /* SECCIONES */
+  .seccion { padding:32px 24px; background:var(--blanco); margin-bottom:8px; }
+  .seccion.oscura { background:var(--negro); }
+  .seccion.gris { background:var(--gris); }
+  .separador { height:8px; background:var(--gris); }
+  .seccion-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; padding-bottom:14px; border-bottom:2px solid var(--negro); }
+  .seccion.oscura .seccion-header { border-bottom-color:rgba(255,255,255,0.15); }
+  .seccion-titulo { font-family:'Bebas Neue',sans-serif; font-size:32px; line-height:1; color:var(--negro); }
+  .seccion.oscura .seccion-titulo { color:var(--blanco); }
+  .seccion-num { font-family:'Bebas Neue',sans-serif; font-size:36px; color:var(--verde); background:var(--negro); width:44px; height:44px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .seccion.oscura .seccion-num { background:var(--verde); color:var(--negro); }
+
+  /* AGENDA */
+  .agenda-lista { display:flex; flex-direction:column; gap:8px; margin-bottom:20px; }
+  .agenda-item { display:flex; align-items:center; gap:14px; padding:12px 14px; background:var(--gris); border-left:3px solid var(--negro); }
+  .agenda-item.destacado { background:var(--negro); border-left-color:var(--verde); }
+  .agenda-tiempo { font-family:'Bebas Neue',sans-serif; font-size:22px; color:var(--violeta); min-width:48px; }
+  .agenda-item.destacado .agenda-tiempo { color:var(--verde); }
+  .agenda-texto { font-size:13px; font-weight:500; color:var(--negro); }
+  .agenda-item.destacado .agenda-texto { color:var(--blanco); }
+  .objetivo-card { background:var(--violeta); padding:20px; color:var(--blanco); }
+  .objetivo-card h3 { font-family:'Bebas Neue',sans-serif; font-size:24px; color:var(--verde); margin-bottom:8px; }
+  .objetivo-card p { font-size:13px; line-height:1.7; opacity:0.9; }
+
+  /* INFO PREVIA */
+  .info-card { background:var(--gris); border-top:3px solid var(--negro); padding:16px; margin-bottom:10px; }
+  .info-card-titulo { font-family:'Bebas Neue',sans-serif; font-size:18px; background:var(--negro); color:var(--verde); padding:6px 10px; margin:-16px -16px 14px; }
+  .info-pregunta { font-size:12px; font-weight:500; padding:8px 0; border-bottom:1px solid #e0e0e0; color:var(--gris-texto); }
+  .info-pregunta:last-of-type { border-bottom:none; }
+  .tip-verde { background:var(--verde); padding:14px 16px; display:flex; gap:10px; align-items:flex-start; margin-top:4px; }
+  .tip-verde p { font-size:12px; font-weight:500; line-height:1.6; color:var(--negro); }
+
+  /* PROMPT CARD */
+  .prompt-card {
+    background: #111;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+
+  .prompt-card-header {
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .prompt-card-header.verde { background: var(--verde); }
+  .prompt-card-header.violeta { background: var(--violeta); }
+
+  .prompt-card-titulo {
+    font-family:'Bebas Neue',sans-serif;
+    font-size: 17px;
+    letter-spacing: 0.5px;
+  }
+  .prompt-card-header.verde .prompt-card-titulo { color: var(--negro); }
+  .prompt-card-header.violeta .prompt-card-titulo { color: var(--blanco); }
+
+  .badge {
+    font-size: 9px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1px; padding: 3px 8px; white-space: nowrap; flex-shrink: 0;
+  }
+  .prompt-card-header.verde .badge { background: var(--negro); color: var(--verde); }
+  .prompt-card-header.violeta .badge { background: rgba(255,255,255,0.15); color: var(--blanco); }
+
+  .prompt-textarea {
+    width: 100%;
+    min-height: 200px;
+    background: #111;
+    border: none;
+    color: rgba(255,255,255,0.85);
+    font-family: monospace;
+    font-size: 12px;
+    line-height: 1.85;
+    padding: 16px;
+    resize: none;
+    outline: none;
+    -webkit-user-select: text;
+    user-select: text;
+    display: block;
+  }
+
+  .btn-seleccionar {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.15s;
+  }
+  .btn-seleccionar.verde-btn { background: var(--verde); color: var(--negro); }
+  .btn-seleccionar.violeta-btn { background: var(--violeta); color: var(--blanco); }
+  .btn-seleccionar:active { opacity: 0.75; transform: scale(0.98); }
+  .btn-seleccionar.listo { background: #22c55e !important; color: white !important; }
+
+  .prompt-instruccion {
+    padding: 10px 16px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.6;
+    background: #0d0d0d;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  /* SEPARADOR DE PROMPTS */
+  .prompts-intro {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+  .prompts-intro strong { color: var(--verde); }
+
+  /* EJERCICIO */
+  .ejercicio-hero { background:var(--negro); padding:20px; margin-bottom:16px; }
+  .ejercicio-hero h3 { font-family:'Bebas Neue',sans-serif; font-size:36px; color:var(--verde); letter-spacing:1px; margin-bottom:6px; }
+  .ejercicio-hero p { font-size:12px; color:rgba(255,255,255,0.6); line-height:1.6; }
+  .paso-card { display:flex; gap:14px; align-items:flex-start; padding:14px; background:var(--gris); border-left:3px solid var(--violeta); margin-bottom:8px; }
+  .paso-num { font-family:'Bebas Neue',sans-serif; font-size:36px; color:var(--violeta); line-height:1; min-width:24px; }
+  .paso-texto { font-size:13px; font-weight:500; line-height:1.6; padding-top:4px; }
+  .notas-titulo { font-family:'Bebas Neue',sans-serif; font-size:22px; margin-bottom:12px; display:block; }
+  .renglon { border-bottom:1px solid #ddd; height:36px; }
+
+  /* TIPS */
+  .tip-card { background:var(--blanco); border-top:3px solid var(--negro); padding:16px; margin-bottom:10px; display:flex; gap:14px; align-items:flex-start; }
+  .tip-card.accent { background:var(--negro); border-top-color:var(--verde); }
+  .tip-num { font-family:'Bebas Neue',sans-serif; font-size:36px; color:var(--verde); background:var(--negro); width:40px; height:40px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .tip-card.accent .tip-num { background:var(--verde); color:var(--negro); }
+  .tip-contenido { flex:1; }
+  .tip-titulo { font-family:'Bebas Neue',sans-serif; font-size:18px; color:var(--negro); margin-bottom:4px; }
+  .tip-card.accent .tip-titulo { color:var(--verde); }
+  .tip-texto { font-size:12px; line-height:1.6; color:var(--gris-texto); }
+  .tip-card.accent .tip-texto { color:rgba(255,255,255,0.65); }
+
+  /* CIERRE */
+  .cierre { background:var(--violeta); padding:28px 24px; color:var(--blanco); text-align:center; }
+  .cierre h3 { font-family:'Bebas Neue',sans-serif; font-size:36px; color:var(--verde); margin-bottom:10px; line-height:1; }
+  .cierre p { font-size:13px; opacity:0.85; line-height:1.7; max-width:300px; margin:0 auto 20px; }
+  .qr-box { width:80px; height:80px; background:rgba(255,255,255,0.12); border:2px dashed rgba(255,255,255,0.25); margin:0 auto; display:flex; align-items:center; justify-content:center; font-size:10px; color:rgba(255,255,255,0.35); font-weight:600; line-height:1.4; text-align:center; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero" id="inicio">
+  <div class="hero-deco"></div>
+  <div class="hero-deco2"></div>
+  <div class="hero-top">
+    <span class="tag-comunidad">Comunidad en Movimiento</span>
+    <span class="tag-fecha">Mayo 2026</span>
+  </div>
+  <div class="hero-centro">
+    <h1>¿Qué hacer<br>para <span>no perder</span><br>clientes?</h1>
+    <p class="hero-sub">Guía práctica para presupuestar con IA y ganar más trabajos.</p>
+  </div>
+  <div class="hero-scroll">
+    <span>Deslizá para empezar</span>
+    <span class="scroll-arrow">↓</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="sticky-nav">
+  <a href="#agenda" class="nav-item">Agenda</a>
+  <a href="#info" class="nav-item">Info previa</a>
+  <a href="#prompts" class="nav-item">Mis prompts</a>
+  <a href="#ejercicio" class="nav-item">Ejercicio</a>
+  <a href="#tips" class="nav-item">Tips IA</a>
+</nav>
+
+<!-- 01 AGENDA -->
+<div class="seccion" id="agenda">
+  <div class="seccion-header">
+    <span class="seccion-titulo">El encuentro de hoy</span>
+    <div class="seccion-num">01</div>
+  </div>
+  <div class="agenda-lista">
+    <div class="agenda-item"><span class="agenda-tiempo">20'</span><span class="agenda-texto">☕ Snack break — llegamos, nos ponemos al día</span></div>
+    <div class="agenda-item"><span class="agenda-tiempo">20'</span><span class="agenda-texto">👋 Bienvenida — ¿cómo llegamos hoy?</span></div>
+    <div class="agenda-item"><span class="agenda-tiempo">20'</span><span class="agenda-texto">📊 Desafíos actuales — el contexto y qué hacemos</span></div>
+    <div class="agenda-item destacado"><span class="agenda-tiempo">40'</span><span class="agenda-texto">🤖 Capacitación IA — presupuestá con ChatGPT y WhatsApp</span></div>
+    <div class="agenda-item"><span class="agenda-tiempo">10'</span><span class="agenda-texto">🚀 Cierre — nos vamos con algo concreto</span></div>
+  </div>
+  <div class="objetivo-card">
+    <h3>¿Qué nos llevamos hoy?</h3>
+    <p>Al terminar este encuentro vas a tener <strong>un mensaje guardado en el celu</strong> listo para usar: mandás los datos del trabajo y en segundos tenés un presupuesto profesional para enviarle al cliente.</p>
+  </div>
+</div>
+
+<div class="separador"></div>
+
+<!-- 02 INFO PREVIA -->
+<div class="seccion" id="info">
+  <div class="seccion-header">
+    <span class="seccion-titulo">Antes de presupuestar</span>
+    <div class="seccion-num">02</div>
+  </div>
+  <p style="font-size:13px;color:var(--gris-texto);margin-bottom:16px;line-height:1.6;">Tené estos datos a mano antes de arrancar. Cuanto más completa es la info, mejor queda el presupuesto.</p>
+  <div class="info-card">
+    <div class="info-card-titulo">Servicio</div>
+    <div class="info-pregunta">¿Qué trabajos vas a hacer?</div>
+    <div class="info-pregunta">¿Cuántos días estimás?</div>
+    <div class="info-pregunta">¿Cuánto cobrás por día o por tarea?</div>
+  </div>
+  <div class="info-card">
+    <div class="info-card-titulo">Materiales</div>
+    <div class="info-pregunta">¿Qué materiales necesitás?</div>
+    <div class="info-pregunta">¿Cuánto cuesta cada uno?</div>
+    <div class="info-pregunta">¿Quién los compra, vos o el cliente?</div>
+  </div>
+  <div class="info-card">
+    <div class="info-card-titulo">Cliente</div>
+    <div class="info-pregunta">¿Cómo querés cobrar?</div>
+    <div class="info-pregunta">¿Qué NO incluye el trabajo?</div>
+  </div>
+  <div class="tip-verde">
+    <span>💡</span>
+    <p><strong>Tip:</strong> Guardá estos prompts en tus Notas o Favoritos de WhatsApp para tenerlos siempre a mano.</p>
+  </div>
+</div>
+
+<div class="separador"></div>
+
+<!-- 03 PROMPTS -->
+<div class="seccion oscura" id="prompts">
+  <div class="seccion-header">
+    <span class="seccion-titulo">Mis prompts</span>
+    <div class="seccion-num">03</div>
+  </div>
+
+  <p class="prompts-intro">Copiá el prompt que necesites, pegalo en <strong>ChatGPT o Meta AI</strong> y completá los campos entre corchetes con tus datos.</p>
+
+  <!-- PROMPT 1: JORNAL — configuración inicial -->
+  <div class="prompt-card">
+    <div class="prompt-card-header verde">
+      <span class="prompt-card-titulo">📋 Prompt 1 — Configuración jornal</span>
+      <span class="badge">Se manda una vez</span>
+    </div>
+    <textarea id="p1" class="prompt-textarea" readonly>Sos mi asistente para armar presupuestos. Mis datos son:
+- Nombre: [TU NOMBRE]
+- Oficio: [TU OFICIO, ej: Electricista]
+- Teléfono: [TU TELÉFONO]
+- Jornal por día: [TU PRECIO POR DÍA]
+
+Cuando te mande los datos de un trabajo, redactame un presupuesto con esta estructura:
+1. Saludo al cliente
+2. Detalle de los trabajos y costo de mano de obra
+3. Materiales con precio
+4. Total general
+5. Qué NO incluye
+6. Plazo estimado y forma de pago
+7. Cierre cordial con mis datos de contacto
+
+Tono: claro y cordial, sin tecnicismos. Listo para copiar y mandar por WhatsApp.</textarea>
+    <button class="btn-seleccionar verde-btn" id="btn-p1" onclick="seleccionar('p1','btn-p1')">👆 Seleccionar todo para copiar</button>
+    <div class="prompt-instruccion">Pegalo en ChatGPT o Meta AI → reemplazá los [ ] con tus datos → listo, ya sabe quién sos.</div>
+  </div>
+
+  <!-- PROMPT 2: JORNAL — por trabajo -->
+  <div class="prompt-card">
+    <div class="prompt-card-header violeta">
+      <span class="prompt-card-titulo">📋 Prompt 2 — Datos del trabajo (jornal)</span>
+      <span class="badge">Cada cliente</span>
+    </div>
+    <textarea id="p2" class="prompt-textarea" readonly>Los datos del trabajo son:
+- Cliente: [NOMBRE DEL CLIENTE]
+- Trabajo a realizar: [DESCRIBÍ EL TRABAJO]
+- Días estimados: [CANTIDAD DE DÍAS]
+- Materiales:
+  · [MATERIAL 1] — $[PRECIO]
+  · [MATERIAL 2] — $[PRECIO]
+  · [MATERIAL 3] — $[PRECIO]
+- Condiciones de pago: [EJ: 50% adelantado, 50% al terminar]
+
+Armame el presupuesto.</textarea>
+    <button class="btn-seleccionar violeta-btn" id="btn-p2" onclick="seleccionar('p2','btn-p2')">👆 Seleccionar todo para copiar</button>
+    <div class="prompt-instruccion">Mandá este mensaje después del Prompt 1. Reemplazá los [ ] con los datos del trabajo.</div>
+  </div>
+
+  <!-- PROMPT 3: PRECIO FIJO — configuración inicial -->
+  <div class="prompt-card">
+    <div class="prompt-card-header verde">
+      <span class="prompt-card-titulo">📋 Prompt 3 — Configuración precio fijo</span>
+      <span class="badge">Se manda una vez</span>
+    </div>
+    <textarea id="p3" class="prompt-textarea" readonly>Sos mi asistente para armar presupuestos. Mis datos son:
+- Nombre: [TU NOMBRE]
+- Oficio: [TU OFICIO, ej: Pintor]
+- Teléfono: [TU TELÉFONO]
+
+Mis tarifas:
+- [TAREA 1]: $[PRECIO]
+- [TAREA 2]: $[PRECIO]
+- [TAREA 3]: $[PRECIO]
+- [TAREA 4]: $[PRECIO]
+
+Cuando te mande los datos de un trabajo, redactame un presupuesto con: saludo, detalle de trabajos con precios según mis tarifas, materiales, total general, qué NO incluye, y cierre cordial con mis datos.
+Tono: claro y sin tecnicismos. Listo para WhatsApp.</textarea>
+    <button class="btn-seleccionar verde-btn" id="btn-p3" onclick="seleccionar('p3','btn-p3')">👆 Seleccionar todo para copiar</button>
+    <div class="prompt-instruccion">Pegalo en ChatGPT o Meta AI → reemplazá los [ ] con tus datos y tarifas reales.</div>
+  </div>
+
+  <!-- PROMPT 4: PRECIO FIJO — por trabajo -->
+  <div class="prompt-card">
+    <div class="prompt-card-header violeta">
+      <span class="prompt-card-titulo">📋 Prompt 4 — Datos del trabajo (precio fijo)</span>
+      <span class="badge">Cada cliente</span>
+    </div>
+    <textarea id="p4" class="prompt-textarea" readonly>Los datos del trabajo son:
+- Cliente: [NOMBRE DEL CLIENTE]
+- Trabajo a realizar: [DESCRIBÍ EL TRABAJO]
+- Materiales:
+  · [MATERIAL 1] — $[PRECIO]
+  · [MATERIAL 2] — $[PRECIO]
+  · [MATERIAL 3] — $[PRECIO]
+- Condiciones de pago: [EJ: 50% adelantado, 50% al terminar]
+
+Armame el presupuesto.</textarea>
+    <button class="btn-seleccionar violeta-btn" id="btn-p4" onclick="seleccionar('p4','btn-p4')">👆 Seleccionar todo para copiar</button>
+    <div class="prompt-instruccion">Mandá este mensaje después del Prompt 3. Reemplazá los [ ] con los datos del trabajo.</div>
+  </div>
+
+</div>
+
+<div class="separador"></div>
+
+<!-- 04 EJERCICIO -->
+<div class="seccion" id="ejercicio">
+  <div class="seccion-header">
+    <span class="seccion-titulo">Ejercicio práctico</span>
+    <div class="seccion-num">04</div>
+  </div>
+  <div class="ejercicio-hero">
+    <h3>¡Sacá el celu!</h3>
+    <p>Vamos a armar un presupuesto real ahora mismo.</p>
+  </div>
+  <div class="paso-card"><span class="paso-num">1</span><span class="paso-texto">Elegí tu prompt (jornal o precio fijo) y tocá <strong>"Seleccionar todo para copiar"</strong></span></div>
+  <div class="paso-card"><span class="paso-num">2</span><span class="paso-texto">Abrí ChatGPT o Meta AI en WhatsApp y pegá el mensaje</span></div>
+  <div class="paso-card"><span class="paso-num">3</span><span class="paso-texto">Reemplazá los [ ] con tus datos reales y mandalo</span></div>
+  <div class="paso-card"><span class="paso-num">4</span><span class="paso-texto">Mandá el Prompt 2 o 4 con los datos del cliente y pedile el presupuesto</span></div>
+  <div style="margin-top:20px;">
+
+
+<div class="separador"></div>
+
+<!-- 05 TIPS -->
+<div class="seccion gris" id="tips">
+  <div class="seccion-header">
+    <span class="seccion-titulo">¿Para qué más sirve la IA?</span>
+    <div class="seccion-num">05</div>
+  </div>
+  <div class="tip-card accent"><div class="tip-num">1</div><div class="tip-contenido"><div class="tip-titulo">Cronograma de obra</div><div class="tip-texto">Describís los trabajos y te arma un cronograma día por día para mostrarle al cliente cuándo termina cada etapa.</div></div></div>
+  <div class="tip-card"><div class="tip-num">2</div><div class="tip-contenido"><div class="tip-titulo">Responder consultas</div><div class="tip-texto">Le pegás la consulta de un cliente y te ayuda a redactar una respuesta profesional, rápida y clara.</div></div></div>
+  <div class="tip-card"><div class="tip-num">3</div><div class="tip-contenido"><div class="tip-titulo">Fotos del antes/después</div><div class="tip-texto">Con ChatGPT podés subir fotos de un espacio y pedirle que muestre cómo podría quedar terminado.</div></div></div>
+  <div class="tip-card accent"><div class="tip-num">4</div><div class="tip-contenido"><div class="tip-titulo">Calcular superficies</div><div class="tip-texto">Subís una foto del ambiente y te ayuda a estimar metros cuadrados para calcular materiales y costos.</div></div></div>
+  <div class="tip-card"><div class="tip-num">5</div><div class="tip-contenido"><div class="tip-titulo">Armar documentos</div><div class="tip-texto">Contratos simples, notas de pedido, remitos o cualquier documento que necesites para tu trabajo.</div></div></div>
+  <div class="tip-card"><div class="tip-num">6</div><div class="tip-contenido"><div class="tip-titulo">Buscar precios</div><div class="tip-texto">ChatGPT (versión web) puede buscar precios de materiales en internet para referencias actualizadas.</div></div></div>
+</div>
+
+<!-- CIERRE -->
+<div class="cierre">
+  <h3>¡Ya tenés todo para arrancar!</h3>
+  <p>Guardá estos prompts en tus Notas y usálos desde hoy. Cualquier duda, preguntale directo a la IA.</p>
+</div>
+
+<script>
+  // Nav highlight
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        const a = document.querySelector(`.nav-item[href="#${e.target.id}"]`);
+        if (a) { a.classList.add('active'); a.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'}); }
+      }
+    });
+  }, { threshold: 0.35 });
+  document.querySelectorAll('[id]').forEach(s => obs.observe(s));
+
+  // Seleccionar todo + intento clipboard
+  function seleccionar(taId, btnId) {
+    const ta  = document.getElementById(taId);
+    const btn = document.getElementById(btnId);
+    ta.focus();
+    ta.select();
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(ta.value).then(() => {
+        btn.textContent = '✅ ¡Copiado!';
+        btn.classList.add('listo');
+        setTimeout(() => {
+          btn.innerHTML = '👆 Seleccionar todo para copiar';
+          btn.classList.remove('listo');
+        }, 2500);
+      }).catch(() => {});
+    }
+  }
+</script>
+</body>
+</html>
